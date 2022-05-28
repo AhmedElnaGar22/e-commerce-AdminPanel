@@ -1,0 +1,56 @@
+﻿@model ProductFormViewModel
+
+@{
+    ViewData["Title"] = "Product Form";
+}
+
+<h2>@(Model.Id > 0 ? "Edit" : "Create") Product</h2>
+
+<hr />
+
+<section class="row">
+    <div class="col-md-4">
+        <form method="post" asp-action="@(Model.Id > 0 ? "Edit" : "Create")" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="text-muted" asp-for="Name"></label>
+                <input type="text" class="form-control" asp-for="Name" maxlength="150" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="text-muted" asp-for="Categories"></label>
+                <select class="form-control" asp-for="Categories" asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                    <option></option>
+                </select>
+            </div>
+            <div class="form-group w-50">
+                <label class="text-muted" asp-for="Price"></label>
+                <input type="number" class="form-control" asp-for="Price" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="text-muted" asp-for="Description"></label>
+                <textarea class="form-control" asp-for="Description" maxlength="2000" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary mt-4">
+                Save
+            </button>
+            <a asp-action="Index" class="btn btn-outline-secondary mt-4">
+                Cancel
+            </a>
+        </form>
+    </div>
+</section>
+
+@*@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(Function(){
+            $('#Photo').on('Change', Function() {
+                var selectedFile = $(this).val().split('\\').pop();
+                $(this).siblings('label').text(selectedFile);
+            });
+        });
+    </script>
+}*@
